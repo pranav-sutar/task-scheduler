@@ -1,0 +1,183 @@
+/* ===== PAGE LAYOUT ===== */
+.container {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 20px 18px 90px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  margin-bottom: 26px;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerIcon {
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #818cf8;
+}
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.headerDate {
+  margin: 6px 0 0 38px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* ===== ADD TASK BUTTON ===== */
+.addBtn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 18px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+  margin-bottom: 24px;
+}
+
+.addBtn:active {
+  transform: scale(0.98);
+}
+
+/* ===== TASK CARD ===== */
+.taskCard {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  padding: 18px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.taskContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Title */
+.taskCard h4 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+/* Date */
+.taskCard p {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* Completed task */
+.taskCard.done {
+  opacity: 0.5;
+}
+
+.taskCard.done h4 {
+  text-decoration: line-through;
+}
+
+/* ===== VIEW DETAILS BUTTON ===== */
+.viewBtn {
+  background: #0b1220;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.viewBtn:active {
+  transform: scale(0.95);
+}
+
+/* ===== MODAL OVERLAY ===== */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 12px;
+}
+
+/* ===== MODAL ===== */
+.modal {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 24px 24px 0 0;
+  padding: 22px;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* ===== FORM INPUTS ===== */
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 14px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+  background: #f8fafc;
+}
+
+.modal textarea {
+  resize: none;
+  height: 100px;
+}
+
+/* ===== MODAL BUTTONS ===== */
+.modalBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.modalBtns button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.modalBtns button:nth-child(1) { background: #22c55e; color: white; }
+.modalBtns button:nth-child(2) { background: #3b82f6; color: white; }
+.modalBtns button:nth-child(3) { background: #ef4444; color: white; }
+.modalBtns button:nth-child(4) { background: #0f172a; color: white; }
+
+
