@@ -4,7 +4,8 @@
   /* max-width: 520px; */
   /* height: 100vh; */
   display: flex;
-  align-items:center;
+  align-items:center !important;
+  min-height: 100vh;
   flex-direction: column;
   justify-content: flex-start;
   margin: 0 auto;
