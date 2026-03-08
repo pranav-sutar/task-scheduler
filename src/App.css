@@ -16,6 +16,7 @@ body {
   color: #e2e8f0;
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 #root {
