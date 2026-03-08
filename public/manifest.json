@@ -1,6 +1,6 @@
 {
   "name": "Pranav Task Scheduler",
-  "short_name": "TaskApp",
+  "short_name": "Get-It-Done",
   "description": "Personal Task Scheduler",
   "start_url": "/",
   "display": "standalone",
