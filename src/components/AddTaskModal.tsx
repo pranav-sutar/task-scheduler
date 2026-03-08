@@ -33,15 +33,29 @@ const AddTaskModal: React.FC<Props> = ({ close, refresh }) => {
 
         <input
           placeholder="Task Title"
+          style={{
+            color: "black",
+          }}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <input type="date" onChange={(e) => setTargetDate(e.target.value)} />
+        <input
+          type="date"
+          style={{
+            color: "black",
+          }}
+          onChange={(e) => setTargetDate(e.target.value)}
+        />
         <textarea
           placeholder="Notes"
+          style={{
+            color: "black",
+          }}
           onChange={(e) => setNotes(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>Add Task</button>
+        <button onClick={handleSubmit} style={{ marginRight: "1rem" }}>
+          Add Task
+        </button>
         <button onClick={close}>Cancel</button>
       </div>
     </div>

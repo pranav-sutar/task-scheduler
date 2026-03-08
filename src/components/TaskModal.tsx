@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import type { Task } from "../types/task";
 import { updateTask, deleteTask } from "../services/api";
 
@@ -9,6 +9,11 @@ interface Props {
 }
 
 const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState(task.title);
+  const [targetDate, setTargetDate] = useState(task.targetDate);
+  const [notes, setNotes] = useState(task.notes);
+
   const toggleStatus = async () => {
     if (!task.id) return;
     await updateTask(task.id, { ...task, completed: !task.completed });
@@ -23,27 +28,91 @@ const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
     close();
   };
 
+  const handleSave = async () => {
+    if (!task.id) return;
+
+    const updatedTask: Task = {
+      ...task,
+      title,
+      targetDate,
+      notes,
+    };
+
+    await updateTask(task.id, updatedTask);
+    refresh();
+    setIsEditing(false);
+  };
+
   return (
     <div className="modalOverlay">
       <div className="modal">
-        <h3>{task.title}</h3>
-        <p>
-          <b>Added:</b> {task.createdAt}
-        </p>
-        <p>
-          <b>Target:</b> {task.targetDate}
-        </p>
-        <p>
-          <b>Notes:</b> {task.notes}
-        </p>
+        {isEditing ? (
+          <>
+            <h3>Edit Task</h3>
+            <input
+              className="modalInput"
+              value={title}
+              style={{
+                color: "black",
+              }}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <input
+              className="modalInput"
+              type="date"
+              style={{
+                color: "black",
+              }}
+              value={targetDate}
+              onChange={(e) => setTargetDate(e.target.value)}
+            />
+            <textarea
+              className="modalTextarea"
+              value={notes}
+              style={{
+                color: "black",
+              }}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+          </>
+        ) : (
+          <>
+            <h3>{task.title}</h3>
+            <p>
+              <b>Added:</b> {task.createdAt}
+            </p>
+            <p>
+              <b>Target:</b> {task.targetDate}
+            </p>
+            <p>
+              <b>Notes:</b> {task.notes}
+            </p>
+          </>
+        )}
 
         <div className="modalBtns">
-          <button onClick={toggleStatus}>
-            {task.completed ? "Mark Undone" : "Mark Done"}
-          </button>
-          <button>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
-          <button onClick={close}>Close</button>
+          {isEditing ? (
+            <>
+              <button className="primaryBtn" onClick={handleSave}>
+                Save
+              </button>
+              <button
+                className="secondaryBtn"
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={toggleStatus}>
+                {task.completed ? "Mark Undone" : "Mark Done"}
+              </button>
+              <button onClick={() => setIsEditing(true)}>Edit</button>
+              <button onClick={handleDelete}>Delete</button>
+              <button onClick={close}>Close</button>
+            </>
+          )}
         </div>
       </div>
     </div>

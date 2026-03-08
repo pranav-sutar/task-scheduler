@@ -14,9 +14,14 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
   background: #0b1220;
   color: #e2e8f0;
-  display: block;
+  display: flex;
+  justify-content: center;
 }
 
 #root {
   width: 100%;
+}
+
+html, body {
+  overflow-x: hidden;
 }
