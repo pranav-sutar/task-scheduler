@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { createTask } from "../services/api";
-import type { Task } from "../types/task";
+import type { Task, Priority } from "../types/task";
 
 interface Props {
   close: () => void;
@@ -8,17 +8,21 @@ interface Props {
 }
 
 const AddTaskModal: React.FC<Props> = ({ close, refresh }) => {
-  const [title, setTitle] = useState<string>("");
-  const [targetDate, setTargetDate] = useState<string>("");
-  const [notes, setNotes] = useState<string>("");
+  const [title, setTitle] = useState("");
+  const [targetDate, setTargetDate] = useState("");
+  const [notes, setNotes] = useState("");
+  const [priority, setPriority] = useState<Priority | "">(""); // "" = no priority
 
   const handleSubmit = async () => {
+    if (!title.trim()) return;
+
     const newTask: Task = {
       title,
       targetDate,
       notes,
       createdAt: new Date().toLocaleDateString(),
       completed: false,
+      priority: priority || undefined, // ✅ send undefined if empty
     };
 
     await createTask(newTask);
@@ -29,34 +33,60 @@ const AddTaskModal: React.FC<Props> = ({ close, refresh }) => {
   return (
     <div className="modalOverlay">
       <div className="modal">
-        <h3>Add New Task</h3>
+        <h3 className="modalTitle">Add New Task</h3>
 
-        <input
-          placeholder="Task Title"
-          style={{
-            color: "black",
-          }}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="date"
-          style={{
-            color: "black",
-          }}
-          onChange={(e) => setTargetDate(e.target.value)}
-        />
-        <textarea
-          placeholder="Notes"
-          style={{
-            color: "black",
-          }}
-          onChange={(e) => setNotes(e.target.value)}
-        />
+        <div className="modalBody">
+          <input
+            className="modalInput"
+            placeholder="Task Title"
+            value={title}
+            style={{
+              color: "black",
+            }}
+            onChange={(e) => setTitle(e.target.value)}
+          />
 
-        <button onClick={handleSubmit} style={{ marginRight: "1rem" }}>
-          Add Task
-        </button>
-        <button onClick={close}>Cancel</button>
+          <input
+            className="modalInput"
+            type="date"
+            style={{
+              color: "black",
+            }}
+            value={targetDate}
+            onChange={(e) => setTargetDate(e.target.value)}
+          />
+
+          <textarea
+            className="modalTextarea"
+            placeholder="Notes"
+            value={notes}
+            style={{
+              color: "black",
+            }}
+            onChange={(e) => setNotes(e.target.value)}
+          />
+
+          {/* Priority Selector */}
+          <select
+            className="modalSelect"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value as Priority | "")}
+          >
+            <option value="">⚪ No Priority</option>
+            <option value="low">🟢 Low Priority</option>
+            <option value="medium">🟡 Medium Priority</option>
+            <option value="high">🔴 High Priority</option>
+          </select>
+        </div>
+
+        <div className="modalBtns">
+          <button className="primaryBtn" onClick={handleSubmit}>
+            Add Task
+          </button>
+          <button className="secondaryBtn" onClick={close}>
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

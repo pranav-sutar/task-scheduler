@@ -1,3 +1,5 @@
+export type Priority = "low" | "medium" | "high";
+
 export interface Task {
     id?: string;
     title: string;
@@ -5,4 +7,5 @@ export interface Task {
     notes: string;
     createdAt: string;
     completed: boolean;
+    priority?: Priority | null;
 }

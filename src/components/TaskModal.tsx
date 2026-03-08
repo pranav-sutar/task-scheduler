@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Task } from "../types/task";
+import type { Task, Priority } from "../types/task";
 import { updateTask, deleteTask } from "../services/api";
 
 interface Props {
@@ -13,6 +13,7 @@ const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
   const [title, setTitle] = useState(task.title);
   const [targetDate, setTargetDate] = useState(task.targetDate);
   const [notes, setNotes] = useState(task.notes);
+  const [priority, setPriority] = useState<Priority | "">(task.priority ?? "");
 
   const toggleStatus = async () => {
     if (!task.id) return;
@@ -36,6 +37,7 @@ const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
       title,
       targetDate,
       notes,
+      priority: priority || null, // allow no priority
     };
 
     await updateTask(task.id, updatedTask);
@@ -49,6 +51,7 @@ const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
         {isEditing ? (
           <>
             <h3>Edit Task</h3>
+
             <input
               className="modalInput"
               value={title}
@@ -57,6 +60,7 @@ const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
               }}
               onChange={(e) => setTitle(e.target.value)}
             />
+
             <input
               className="modalInput"
               type="date"
@@ -66,6 +70,7 @@ const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
               value={targetDate}
               onChange={(e) => setTargetDate(e.target.value)}
             />
+
             <textarea
               className="modalTextarea"
               value={notes}
@@ -74,6 +79,18 @@ const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
               }}
               onChange={(e) => setNotes(e.target.value)}
             />
+
+            {/* Priority Selector */}
+            <select
+              className="modalSelect"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value as Priority | "")}
+            >
+              <option value="">⚪ No Priority</option>
+              <option value="low">🟢 Low Priority</option>
+              <option value="medium">🟡 Medium Priority</option>
+              <option value="high">🔴 High Priority</option>
+            </select>
           </>
         ) : (
           <>
@@ -87,6 +104,16 @@ const TaskModal: React.FC<Props> = ({ task, close, refresh }) => {
             <p>
               <b>Notes:</b> {task.notes}
             </p>
+
+            {/* Show priority only if exists */}
+            {task.priority && (
+              <p>
+                <b>Priority:</b>{" "}
+                <span className={`priorityBadge ${task.priority}`}>
+                  {task.priority.toUpperCase()}
+                </span>
+              </p>
+            )}
           </>
         )}
 
